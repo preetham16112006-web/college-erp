@@ -113,6 +113,11 @@ urlpatterns = [
         views.leave_request_list,
         name="leave_request_list"
     ),
+    path(
+        "departments/", 
+        views.department_list, 
+        name="department_list"
+    ),
 
 
     # =========================
