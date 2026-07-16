@@ -64,7 +64,8 @@ def student_list(request):
         request,
         "student_list.html",
         {
-            "students": students
+            "items":students,
+            "tittle":students,
         }
     )
 
