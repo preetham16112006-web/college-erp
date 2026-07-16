@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-t7yg-u@q+yex(2*+!l8!89p9qp)4s9)r^b4495x+&r5q+m8*b@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "college-erp-1xh1.onrender.com",
+    "localhost",
+    "127.0.001"
+]
 
 
 # Application definition
