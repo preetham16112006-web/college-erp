@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<h1>{{ title }}</h1>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>ID</th>
+        <th>Data</th>
+    </tr>
+
+    {% for obj in objects %}
+    <tr>
+        <td>{{ obj.id }}</td>
+        <td>{{ obj }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="/">Back to Dashboard</a>
+
+</body>
+</html>
