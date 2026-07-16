@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | College ERP</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7f8;
+            color: #263238;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+        .header {
+            background: linear-gradient(135deg, #00695c, #00897b);
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+        }
+
+        .brand-text h1 {
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .brand-text p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            color: #00695c;
+            padding: 11px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #e0f2f1;
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+
+        /* =========================
+           WELCOME BANNER
+        ========================= */
+        .welcome-banner {
+            background: linear-gradient(135deg, #ffffff, #e0f2f1);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border-left: 6px solid #00897b;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .welcome-banner h2 {
+            color: #00695c;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-banner p {
+            color: #607d8b;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           SECTION HEADER
+        ========================= */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .section-title h2 {
+            font-size: 22px;
+            color: #263238;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: #dce5e7;
+        }
+
+
+        /* =========================
+           PROFILE SECTION
+        ========================= */
+        .profile-section {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: #f8fbfb;
+            border: 1px solid #e5eeee;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-3px);
+            border-color: #80cbc4;
+            box-shadow: 0 5px 14px rgba(0, 105, 92, 0.08);
+        }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 12px;
+            background: #e0f2f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .profile-info h4 {
+            color: #78909c;
+            font-size: 12px;
+            letter-spacing: 0.7px;
+            margin-bottom: 7px;
+        }
+
+        .profile-info p {
+            font-size: 17px;
+            font-weight: bold;
+            color: #263238;
+            word-break: break-word;
+        }
+
+
+        /* =========================
+           SERVICES
+        ========================= */
+        .services-section {
+            margin-bottom: 40px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            background: white;
+            padding: 28px 24px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #263238;
+            border: 1px solid #edf1f2;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+            transition: 0.3s;
+        }
+
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #00897b;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            border-color: #b2dfdb;
+            box-shadow: 0 12px 28px rgba(0, 105, 92, 0.14);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 15px;
+            background: #e0f2f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            color: #00695c;
+            font-size: 19px;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #607d8b;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .service-link {
+            color: #00897b;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+        .footer {
+            text-align: center;
+            padding: 22px;
+            color: #78909c;
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+        @media (max-width: 900px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 15px 5%;
+            }
+
+            .brand-text p {
+                display: none;
+            }
+
+            .brand-text h1 {
+                font-size: 20px;
+            }
+
+            .logout-btn {
+                padding: 9px 14px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 22px;
+            }
+
+            .welcome-banner {
+                padding: 24px 20px;
+            }
+
+            .welcome-banner h2 {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-logo {
+                width: 42px;
+                height: 42px;
+                font-size: 21px;
+            }
+
+            .logout-text {
+                display: none;
+            }
+
+            .profile-section {
+                padding: 20px;
+            }
+
+            .service-card {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+    <header class="header">
+
+        <div class="brand">
+            <div class="brand-logo">
+                🎓
+            </div>
+
+            <div class="brand-text">
+                <h1>Student Dashboard</h1>
+                <p>College ERP Management System</p>
+            </div>
+        </div>
+
+        <a href="{% url 'student_logout' %}" class="logout-btn">
+            <span>↪</span>
+            <span class="logout-text">Logout</span>
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+    <main class="container">
+
+        <!-- WELCOME -->
+        <section class="welcome-banner">
+            <h2>Welcome, {{ student.name }} 👋</h2>
+            <p>
+                Access your academic information, attendance,
+                results, fees, timetable, assignments and notices
+                from one place.
+            </p>
+        </section>
+
+
+        <!-- =========================
+             STUDENT PROFILE
+        ========================== -->
+        <section class="profile-section">
+
+            <div class="section-title">
+                <h2>My Profile</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="profile-grid">
+
+                <!-- STUDENT NAME -->
+                <div class="profile-card">
+                    <div class="profile-icon">👤</div>
+
+                    <div class="profile-info">
+                        <h4>STUDENT NAME</h4>
+                        <p>{{ student.name }}</p>
+                    </div>
+                </div>
+
+
+                <!-- ROLL NUMBER -->
+                <div class="profile-card">
+                    <div class="profile-icon">🪪</div>
+
+                    <div class="profile-info">
+                        <h4>ROLL NUMBER</h4>
+                        <p>{{ student.roll_number }}</p>
+                    </div>
+                </div>
+
+
+                <!-- EMAIL -->
+                <div class="profile-card">
+                    <div class="profile-icon">✉️</div>
+
+                    <div class="profile-info">
+                        <h4>EMAIL</h4>
+                        <p>{{ student.email }}</p>
+                    </div>
+                </div>
+
+
+                <!-- COURSE -->
+                <div class="profile-card">
+                    <div class="profile-icon">📚</div>
+
+                    <div class="profile-info">
+                        <h4>COURSE</h4>
+                        <p>{{ student.course }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             STUDENT SERVICES
+        ========================== -->
+        <section class="services-section">
+
+            <div class="section-title">
+                <h2>Student Services</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="services-grid">
+
+
+                <!-- ATTENDANCE -->
+                <a href="{% url 'student_attendance' %}"
+                   class="service-card">
+
+                    <div class="service-icon">📅</div>
+
+                    <h3>Attendance</h3>
+
+                    <p>
+                        View your daily attendance records
+                        and attendance information.
+                    </p>
+
+                    <span class="service-link">
+                        View Attendance →
+                    </span>
+
+                </a>
+
+
+                <!-- RESULTS -->
+                <a href="{% url 'student_services' %}#results"
+                   class="service-card">
+
+                    <div class="service-icon">📊</div>
+
+                    <h3>Results</h3>
+
+                    <p>
+                        Check your examination marks,
+                        grades and academic results.
+                    </p>
+
+                    <span class="service-link">
+                        View Results →
+                    </span>
+
+                </a>
+
+
+                <!-- FEES -->
+                <a href="{% url 'student_services' %}#fees"
+                   class="service-card">
+
+                    <div class="service-icon">💳</div>
+
+                    <h3>Fees</h3>
+
+                    <p>
+                        View fee details, total amount
+                        and payment status.
+                    </p>
+
+                    <span class="service-link">
+                        View Fees →
+                    </span>
+
+                </a>
+
+
+                <!-- TIMETABLE -->
+                <a href="{% url 'student_services' %}#timetable"
+                   class="service-card">
+
+                    <div class="service-icon">🗓️</div>
+
+                    <h3>Timetable</h3>
+
+                    <p>
+                        View your course class schedule
+                        and timetable information.
+                    </p>
+
+                    <span class="service-link">
+                        View Timetable →
+                    </span>
+
+                </a>
+
+
+                <!-- ASSIGNMENTS -->
+                <a href="{% url 'student_services' %}#assignments"
+                   class="service-card">
+
+                    <div class="service-icon">📝</div>
+
+                    <h3>Assignments</h3>
+
+                    <p>
+                        Check assignments, academic work
+                        and submission due dates.
+                    </p>
+
+                    <span class="service-link">
+                        View Assignments →
+                    </span>
+
+                </a>
+
+
+                <!-- NOTICES -->
+                <a href="{% url 'student_services' %}#notices"
+                   class="service-card">
+
+                    <div class="service-icon">📢</div>
+
+                    <h3>Notices</h3>
+
+                    <p>
+                        Stay updated with important
+                        college announcements and notices.
+                    </p>
+
+                    <span class="service-link">
+                        View Notices →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="footer">
+        © College ERP Management System
+    </footer>
+
+</body>
+</html>

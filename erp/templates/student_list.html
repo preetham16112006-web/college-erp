@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title }} | College ERP</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        /* HEADER */
+        .header {
+            background: #17191c;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 20px 0;
+            font-size: 36px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #168bc0;
+            color: white;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 6px;
+        }
+
+        .back-btn:hover {
+            background: #0f6f9c;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        /* TOP SECTION */
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .top-section h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        /* ADD BUTTON */
+        .add-btn {
+            display: inline-block;
+            background: #168bc0;
+            color: white;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #0f6f9c;
+        }
+
+        /* TABLE */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #168bc0;
+            color: white;
+            padding: 16px;
+            text-align: left;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f5f9fc;
+        }
+
+        /* ACTION BUTTONS */
+        .edit-btn {
+            display: inline-block;
+            background: #f0ad4e;
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            margin-right: 7px;
+        }
+
+        .edit-btn:hover {
+            background: #d9952f;
+        }
+
+        .delete-btn {
+            display: inline-block;
+            background: #d9534f;
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+        }
+
+        .delete-btn:hover {
+            background: #b83d39;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
+            padding: 35px;
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            th,
+            td {
+                padding: 12px;
+            }
+
+            .edit-btn,
+            .delete-btn {
+                display: block;
+                text-align: center;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h1>{{ title }}</h1>
+
+        <a href="{% url 'home' %}" class="back-btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <div class="top-section">
+
+            <h2>All {{ title }}</h2>
+
+            <!-- SHOW ADD BUTTON ONLY FOR STUDENTS -->
+            {% if title == "Students" %}
+
+                <a href="{% url 'student_add' %}" class="add-btn">
+                    + Add Student
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>{{ title }}</th>
+
+                        <!-- ACTION COLUMN ONLY FOR STUDENTS -->
+                        {% if title == "Students" %}
+                            <th>Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in items %}
+
+                        <tr>
+
+                            <td>
+                                {{ item.id }}
+                            </td>
+
+                            <td>
+                                {{ item }}
+                            </td>
+
+
+                            <!-- EDIT AND DELETE ONLY FOR STUDENTS -->
+                            {% if title == "Students" %}
+
+                                <td>
+
+                                    <a
+                                        href="{% url 'student_edit' item.id %}"
+                                        class="edit-btn"
+                                    >
+                                        Edit
+                                    </a>
+
+
+                                    <a
+                                        href="{% url 'student_delete' item.id %}"
+                                        class="delete-btn"
+                                    >
+                                        Delete
+                                    </a>
+
+                                </td>
+
+                            {% endif %}
+
+                        </tr>
+
+
+                    {% empty %}
+
+                        <tr>
+
+                            {% if title == "Students" %}
+
+                                <td colspan="3" class="empty">
+                                    No {{ title }} found.
+                                </td>
+
+                            {% else %}
+
+                                <td colspan="2" class="empty">
+                                    No {{ title }} found.
+                                </td>
+
+                            {% endif %}
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

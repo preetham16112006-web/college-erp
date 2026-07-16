@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>College ERP Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        /* HEADER */
+        .header {
+            background: #17191c;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            padding: 12px 22px;
+            background: #168bc0;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #0f6f9c;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 35px auto;
+        }
+
+        .container h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card {
+            background: white;
+            min-height: 180px;
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #168bc0;
+            margin-bottom: 15px;
+        }
+
+        .manage {
+            font-size: 26px;
+            font-weight: bold;
+            color: #168bc0;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <h1>College ERP System</h1>
+
+        <div class="nav-buttons">
+            <a href="/" class="nav-btn">Dashboard</a>
+            <a href="/admin/" class="nav-btn">Admin Panel</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <h2>ERP Dashboard</h2>
+
+        <div class="cards">
+
+            <!-- STUDENTS -->
+            <a href="/students/" class="card-link">
+                <div class="card">
+                    <h3>Students</h3>
+                    <div class="number">{{ student_count }}</div>
+                    <p class="description">Total Students</p>
+                </div>
+            </a>
+
+            <!-- FACULTY -->
+            <a href="/faculty/" class="card-link">
+                <div class="card">
+                    <h3>Faculty</h3>
+                    <div class="number">{{ faculty_count }}</div>
+                    <p class="description">Total Faculty</p>
+                </div>
+            </a>
+
+            <!-- COURSES -->
+            <a href="/courses/" class="card-link">
+                <div class="card">
+                    <h3>Courses</h3>
+                    <div class="number">{{ course_count }}</div>
+                    <p class="description">Total Courses</p>
+                </div>
+            </a>
+
+            <!-- SUBJECTS -->
+            <a href="/subjects/" class="card-link">
+                <div class="card">
+                    <h3>Subjects</h3>
+                    <div class="number">{{ subject_count }}</div>
+                    <p class="description">Total Subjects</p>
+                </div>
+            </a>
+
+            <!-- DEPARTMENTS -->
+            <a href="/departments/" class="card-link">
+                <div class="card">
+                    <h3>Departments</h3>
+                    <div class="number">{{ department_count }}</div>
+                    <p class="description">Total Departments</p>
+                </div>
+            </a>
+
+            <!-- ATTENDANCE -->
+            <a href="/attendance/" class="card-link">
+                <div class="card">
+                    <h3>Attendance</h3>
+                    <div class="number">{{ attendance_count }}</div>
+                    <p class="description">Attendance Records</p>
+                </div>
+            </a>
+
+            <!-- NOTICES -->
+            <a href="/notices/" class="card-link">
+                <div class="card">
+                    <h3>Notices</h3>
+                    <div class="number">{{ notice_count }}</div>
+                    <p class="description">Total Notices</p>
+                </div>
+            </a>
+
+            <!-- FEES -->
+            <a href="/fees/" class="card-link">
+                <div class="card">
+                    <h3>Fees</h3>
+                    <div class="manage">Manage</div>
+                    <p class="description">Student Fee Records</p>
+                </div>
+            </a>
+
+            <!-- RESULTS -->
+            <a href="/results/" class="card-link">
+                <div class="card">
+                    <h3>Results</h3>
+                    <div class="manage">Manage</div>
+                    <p class="description">Student Results</p>
+                </div>
+            </a>
+
+            <!-- TIMETABLES -->
+            <a href="/timetables/" class="card-link">
+                <div class="card">
+                    <h3>Timetables</h3>
+                    <div class="manage">Manage</div>
+                    <p class="description">Class Timetables</p>
+                </div>
+            </a>
+
+            <!-- ASSIGNMENTS -->
+            <a href="/assignments/" class="card-link">
+                <div class="card">
+                    <h3>Assignments</h3>
+                    <div class="manage">Manage</div>
+                    <p class="description">Student Assignments</p>
+                </div>
+            </a>
+
+            <!-- EVENTS -->
+            <a href="/events/" class="card-link">
+                <div class="card">
+                    <h3>Events</h3>
+                    <div class="manage">Manage</div>
+                    <p class="description">College Events</p>
+                </div>
+            </a>
+
+            <!-- LEAVE REQUESTS -->
+            <a href="/leave-requests/" class="card-link">
+                <div class="card">
+                    <h3>Leave Requests</h3>
+                    <div class="manage">Manage</div>
+                    <p class="description">Manage Leave Requests</p>
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

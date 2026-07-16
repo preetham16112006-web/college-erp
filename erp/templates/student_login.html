@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Login | College ERP</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #17191c;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            color: #ccc;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            margin: 60px auto;
+        }
+
+        .login-box {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #222;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #168bc0;
+        }
+
+        .login-btn {
+            width: 100%;
+            border: none;
+            background: #168bc0;
+            color: white;
+            padding: 13px;
+            border-radius: 6px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #0f6f9c;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #842029;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info {
+            margin-top: 25px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .home-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #168bc0;
+            text-decoration: none;
+        }
+
+        .home-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                margin-top: 35px;
+            }
+
+            .login-box {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>College ERP System</h1>
+        <p>Student Portal</p>
+    </div>
+
+    <div class="container">
+
+        <div class="login-box">
+
+            <h2>Student Login</h2>
+
+            {% if error %}
+                <div class="error">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                        autofocus
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+                    Login
+                </button>
+
+            </form>
+
+            <div class="info">
+                Use the username and temporary password
+                provided by the college administrator.
+            </div>
+
+            <a
+                href="{% url 'home' %}"
+                class="home-link"
+            >
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

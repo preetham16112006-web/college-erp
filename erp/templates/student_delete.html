@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Student | College ERP</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        .header {
+            background: #17191c;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 60px auto;
+        }
+
+        .delete-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .delete-box h2 {
+            color: #d9534f;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .delete-box p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .student-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #222;
+            margin: 20px 0 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .delete-btn {
+            border: none;
+            background: #d9534f;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #b83d39;
+        }
+
+        .cancel-btn {
+            display: inline-block;
+            background: #168bc0;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .cancel-btn:hover {
+            background: #0f6f9c;
+        }
+
+        @media (max-width: 500px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .delete-box {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Delete Student</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="delete-box">
+
+            <h2>Confirm Delete</h2>
+
+            <p>
+                Are you sure you want to permanently delete this student?
+            </p>
+
+            <div class="student-name">
+                {{ student }}
+            </div>
+
+            <div class="buttons">
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <button type="submit" class="delete-btn">
+                        Yes, Delete
+                    </button>
+                </form>
+
+                <a href="{% url 'student_list' %}" class="cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
