@@ -26,11 +26,10 @@ SECRET_KEY = 'django-insecure-t7yg-u@q+yex(2*+!l8!89p9qp)4s9)r^b4495x+&r5q+m8*b@
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "college-erp-1xh1.onrender.com",
+    "127.0.0.1",
     "localhost",
-    "127.0.001"
+    "college-erp-1xh1.onrender.com",
 ]
-
 
 # Application definition
 
