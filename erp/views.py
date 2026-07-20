@@ -144,7 +144,7 @@ def student_delete(request, student_id):
         id=student_id
     )
 
-    if request.method == "POST":
+    if request.method == "POST":   
         student.delete()
         return redirect("student_list")
 
