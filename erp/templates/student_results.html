@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | College ERP</title>
+
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+
+        body{
+            margin:0;
+            font-family:Arial,sans-serif;
+            background:#f4f6f8;
+        }
+
+        header{
+            background:#111;
+            color:#fff;
+            padding:25px 8%;
+        }
+
+        .container{
+            width:90%;
+            margin:30px auto;
+        }
+
+        .back-btn{
+            display:inline-block;
+            padding:12px 20px;
+            background:#079bb3;
+            color:#fff;
+            text-decoration:none;
+            border-radius:6px;
+            margin-bottom:25px;
+        }
+
+        .section{
+            background:#fff;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,.08);
+        }
+
+        h2{
+            color:#079bb3;
+            border-bottom:2px solid #eee;
+            padding-bottom:10px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:20px;
+        }
+
+        th{
+            background:#079bb3;
+            color:#fff;
+            padding:12px;
+            text-align:left;
+        }
+
+        td{
+            padding:12px;
+            border-bottom:1px solid #ddd;
+        }
+
+        .empty{
+            text-align:center;
+            color:#777;
+            padding:25px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>College ERP</h1>
+    <p>Student Results</p>
+</header>
+
+<div class="container">
+
+    <a href="{% url 'student_dashboard' %}" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+    <div class="section">
+
+        <h2>Results</h2>
+
+        {% if results %}
+
+        <table>
+
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Grade</th>
+            </tr>
+
+            {% for result in results %}
+
+            <tr>
+                <td>{{ result.subject }}</td>
+                <td>{{ result.marks }}</td>
+                <td>{{ result.grade }}</td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p class="empty">
+            No results found.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

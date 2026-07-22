@@ -506,4 +506,101 @@ def student_services(request):
         "student_services.html",
         context
     )
-       
+
+
+@login_required(login_url="student_login")
+def student_fees(request):
+    if not hasattr(request.user, "student_profile"):
+        logout(request)
+        return redirect("student_login")
+
+    student = request.user.student_profile
+    fees = Fee.objects.filter(student=student)
+
+    return render(
+        request,
+        "student_fees.html",
+        {
+            "student": student,
+            "fees": fees,
+        }
+    )
+
+
+@login_required(login_url="student_login")
+def student_results(request):
+    if not hasattr(request.user, "student_profile"):
+        logout(request)
+        return redirect("student_login")
+
+    student = request.user.student_profile
+    results = Result.objects.filter(student=student)
+
+    return render(
+        request,
+        "student_results.html",
+        {
+            "student": student,
+            "results": results,
+        }
+    )
+
+
+@login_required(login_url="student_login")
+def student_timetable(request):
+    if not hasattr(request.user, "student_profile"):
+        logout(request)
+        return redirect("student_login")
+
+    student = request.user.student_profile
+
+    timetable = Timetable.objects.filter(
+        course__name__iexact=student.course.strip()
+    )
+
+    return render(
+        request,
+        "student_timetable.html",
+        {
+            "student": student,
+            "timetable": timetable,
+        }
+    )
+
+
+@login_required(login_url="student_login")
+def student_notices(request):
+    if not hasattr(request.user, "student_profile"):
+        logout(request)
+        return redirect("student_login")
+
+    student = request.user.student_profile
+    notices = Notice.objects.all().order_by("-date")
+
+    return render(
+        request,
+        "student_notices.html",
+        {
+            "student": student,
+            "notices": notices,
+        }
+    )
+
+
+@login_required(login_url="student_login")
+def student_assignments(request):
+    if not hasattr(request.user, "student_profile"):
+        logout(request)
+        return redirect("student_login")
+
+    student = request.user.student_profile
+    assignments = Assignment.objects.all()
+
+    return render(
+        request,
+        "student_assignments.html",
+        {
+            "student": student,
+            "assignments": assignments,
+        }
+    )

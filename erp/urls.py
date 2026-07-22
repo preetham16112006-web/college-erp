@@ -118,6 +118,54 @@ urlpatterns = [
         views.department_list, 
         name="department_list"
     ),
+    path(
+    "events/",
+    views.event_list,
+    name="event_list"
+),
+
+path(
+    "leave-requests/",
+    views.leave_request_list,
+    name="leave_request_list"
+),
+
+path(
+    "departments/",
+    views.department_list,
+    name="department_list"
+),
+
+# NEW STUDENT PAGES
+path(
+    "student-fees/",
+    views.student_fees,
+    name="student_fees"
+),
+
+path(
+    "student-results/",
+    views.student_results,
+    name="student_results"
+),
+
+path(
+    "student-timetable/",
+    views.student_timetable,
+    name="student_timetable"
+),
+
+path(
+    "student-notices/",
+    views.student_notices,
+    name="student_notices"
+),
+
+path(
+    "student-assignments/",
+    views.student_assignments,
+    name="student_assignments"
+),
 
 
     # =========================
