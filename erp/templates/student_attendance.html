@@ -76,6 +76,74 @@
             margin-bottom: 8px;
         }
 
+        .filters-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .filters-form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+
+        .field-group {
+            min-width: 160px;
+        }
+
+        .field-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .field-group select {
+            width: 100%;
+            padding: 9px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .filter-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #168bc0;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .summary-grid {
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .summary-card h3 {
+            font-size: 14px;
+            color: #4d4d4d;
+            margin-bottom: 8px;
+        }
+
+        .summary-card p {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0f6f9c;
+        }
+
         /* TABLE */
         .table-box {
             background: white;
@@ -156,6 +224,10 @@
                 padding: 12px 8px;
                 font-size: 14px;
             }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
@@ -190,6 +262,51 @@
                 Roll Number:
                 {{ student.roll_number }}
             </p>
+        </section>
+
+        <section class="filters-box">
+            <form method="get" class="filters-form">
+                <div class="field-group">
+                    <label for="month">Month</label>
+                    <select id="month" name="month">
+                        {% for value, label in month_options %}
+                            <option value="{{ value }}" {% if selected_month == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label for="year">Year</label>
+                    <select id="year" name="year">
+                        {% for value in year_options %}
+                            <option value="{{ value }}" {% if selected_year == value %}selected{% endif %}>
+                                {{ value }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="filter-btn">Apply</button>
+            </form>
+        </section>
+
+        <section class="summary-grid">
+            <div class="summary-card">
+                <h3>Total Classes</h3>
+                <p>{{ total_classes }}</p>
+            </div>
+            <div class="summary-card">
+                <h3>Attended</h3>
+                <p>{{ attended_classes }}</p>
+            </div>
+            <div class="summary-card">
+                <h3>Absent</h3>
+                <p>{{ absent_classes }}</p>
+            </div>
+            <div class="summary-card">
+                <h3>Attendance % ({{ attendance_band }})</h3>
+                <p>{{ attendance_percentage }}%</p>
+            </div>
         </section>
 
 

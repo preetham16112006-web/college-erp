@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import modelform_factory
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 from .models import (
     Student,
@@ -49,6 +50,15 @@ StudentForm = modelform_factory(
         "roll_number",
         "email",
         "course",
+        "profile_photo",
+        "address",
+        "phone_number_1",
+        "phone_number_2",
+        "caste",
+        "religion",
+        "nationality",
+        "admission_number",
+        "stats_number",
     ]
 )
 
@@ -77,7 +87,10 @@ def student_list(request):
 def student_add(request):
 
     if request.method == "POST":
-        form = StudentForm(request.POST)
+        form = StudentForm(
+            request.POST,
+            request.FILES
+        )
 
         if form.is_valid():
             form.save()
@@ -110,6 +123,7 @@ def student_edit(request, student_id):
     if request.method == "POST":
         form = StudentForm(
             request.POST,
+            request.FILES,
             instance=student
         )
 
@@ -449,13 +463,81 @@ def student_attendance(request):
 
     student = request.user.student_profile
 
-    attendance_records = Attendance.objects.filter(
+    attendance_qs = Attendance.objects.filter(
         student_name__iexact=student.name
     ).order_by("-date")
+
+    now = datetime.now()
+    month = request.GET.get("month", now.month)
+    year = request.GET.get("year", now.year)
+
+    try:
+        month = int(month)
+    except (TypeError, ValueError):
+        month = now.month
+
+    try:
+        year = int(year)
+    except (TypeError, ValueError):
+        year = now.year
+
+    if month < 1 or month > 12:
+        month = now.month
+
+    attendance_records = attendance_qs.filter(
+        date__month=month,
+        date__year=year
+    )
+
+    total_classes = attendance_records.count()
+    attended_classes = attendance_records.filter(
+        status__iexact="present"
+    ).count()
+    absent_classes = attendance_records.filter(
+        status__iexact="absent"
+    ).count()
+
+    attendance_percentage = 0
+    if total_classes > 0:
+        attendance_percentage = round(
+            (attended_classes / total_classes) * 100,
+            2
+        )
+
+    if attendance_percentage >= 80:
+        attendance_band = "Excellent"
+    elif attendance_percentage >= 60:
+        attendance_band = "Average"
+    else:
+        attendance_band = "Needs Improvement"
+
+    available_years = attendance_qs.dates(
+        "date",
+        "year",
+        order="DESC"
+    )
+    year_options = [item.year for item in available_years]
+    if year not in year_options:
+        year_options.append(year)
+        year_options.sort(reverse=True)
 
     context = {
         "student": student,
         "attendance_records": attendance_records,
+        "selected_month": month,
+        "selected_year": year,
+        "total_classes": total_classes,
+        "attended_classes": attended_classes,
+        "absent_classes": absent_classes,
+        "attendance_percentage": attendance_percentage,
+        "attendance_band": attendance_band,
+        "month_options": [
+            (1, "January"), (2, "February"), (3, "March"),
+            (4, "April"), (5, "May"), (6, "June"),
+            (7, "July"), (8, "August"), (9, "September"),
+            (10, "October"), (11, "November"), (12, "December"),
+        ],
+        "year_options": year_options,
     }
 
     return render(

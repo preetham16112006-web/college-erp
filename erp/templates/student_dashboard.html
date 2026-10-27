@@ -204,6 +204,14 @@
             word-break: break-word;
         }
 
+        .photo-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 2px solid #d9ece9;
+        }
+
 
         /* =========================
            SERVICES
@@ -422,6 +430,22 @@
 
             <div class="profile-grid">
 
+                <div class="profile-card">
+                    <div class="profile-icon">🖼️</div>
+                    <div class="profile-info">
+                        <h4>PROFILE PHOTO</h4>
+                        {% if student.profile_photo %}
+                            <img
+                                src="{{ student.profile_photo.url }}"
+                                alt="Profile photo"
+                                class="photo-preview"
+                            >
+                        {% else %}
+                            <p>Not uploaded</p>
+                        {% endif %}
+                    </div>
+                </div>
+
                 <!-- STUDENT NAME -->
                 <div class="profile-card">
                     <div class="profile-icon">👤</div>
@@ -462,6 +486,70 @@
                     <div class="profile-info">
                         <h4>COURSE</h4>
                         <p>{{ student.course }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">🏠</div>
+                    <div class="profile-info">
+                        <h4>ADDRESS</h4>
+                        <p>{{ student.address|default:"Not added" }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">📱</div>
+                    <div class="profile-info">
+                        <h4>PHONE 1</h4>
+                        <p>{{ student.phone_number_1|default:"Not added" }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">☎️</div>
+                    <div class="profile-info">
+                        <h4>PHONE 2</h4>
+                        <p>{{ student.phone_number_2|default:"Not added" }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">🧾</div>
+                    <div class="profile-info">
+                        <h4>ADMISSION NO</h4>
+                        <p>{{ student.admission_number|default:"Not added" }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">📌</div>
+                    <div class="profile-info">
+                        <h4>STATS NO</h4>
+                        <p>{{ student.stats_number|default:"Not added" }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">🧬</div>
+                    <div class="profile-info">
+                        <h4>CASTE</h4>
+                        <p>{{ student.caste|default:"Not added" }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">🕊️</div>
+                    <div class="profile-info">
+                        <h4>RELIGION</h4>
+                        <p>{{ student.religion|default:"Not added" }}</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-icon">🌍</div>
+                    <div class="profile-info">
+                        <h4>NATIONALITY</h4>
+                        <p>{{ student.nationality|default:"Not added" }}</p>
                     </div>
                 </div>
 
