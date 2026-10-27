@@ -167,6 +167,12 @@ path(
     name="student_assignments"
 ),
 
+path(
+    "student-leave-requests/",
+    views.student_leave_requests,
+    name="student_leave_requests"
+),
+
 
     # =========================
     # STUDENT LOGIN SYSTEM
@@ -187,6 +193,20 @@ path(
         "logout/",
         views.student_logout,
         name="student_logout"
+    ),
+
+    path(
+        "leave-requests/<int:request_id>/approve/",
+        views.leave_request_update_status,
+        {"status": "Approved"},
+        name="leave_request_approve"
+    ),
+
+    path(
+        "leave-requests/<int:request_id>/reject/",
+        views.leave_request_update_status,
+        {"status": "Rejected"},
+        name="leave_request_reject"
     ),
 
 ]

@@ -326,11 +326,40 @@ def event_list(request):
 # ==================================================
 
 def leave_request_list(request):
-    return show_list(
+    if not request.user.is_authenticated or not request.user.is_staff:
+        return redirect("student_login")
+
+    leave_requests = LeaveRequest.objects.select_related(
+        "student"
+    ).order_by("-id")
+
+    return render(
         request,
-        LeaveRequest,
-        "Leave Requests"
+        "leave_request_list.html",
+        {
+            "leave_requests": leave_requests
+        }
     )
+
+
+@login_required(login_url="student_login")
+def leave_request_update_status(request, request_id, status):
+    if not request.user.is_staff:
+        return redirect("student_login")
+
+    leave_request = get_object_or_404(
+        LeaveRequest,
+        id=request_id
+    )
+
+    if request.method == "POST" and status in [
+        "Approved",
+        "Rejected",
+    ]:
+        leave_request.status = status
+        leave_request.save()
+
+    return redirect("leave_request_list")
 
 
 # ==================================================
@@ -684,5 +713,48 @@ def student_assignments(request):
         {
             "student": student,
             "assignments": assignments,
+        }
+    )
+
+
+@login_required(login_url="student_login")
+def student_leave_requests(request):
+    if not hasattr(request.user, "student_profile"):
+        logout(request)
+        return redirect("student_login")
+
+    student = request.user.student_profile
+    error = None
+
+    if request.method == "POST":
+        reason = request.POST.get("reason", "").strip()
+        from_date = request.POST.get("from_date")
+        to_date = request.POST.get("to_date")
+
+        if not reason or not from_date or not to_date:
+            error = "Please fill all fields."
+        elif to_date < from_date:
+            error = "To date must be on or after from date."
+        else:
+            LeaveRequest.objects.create(
+                student=student,
+                reason=reason,
+                from_date=from_date,
+                to_date=to_date,
+                status="Pending"
+            )
+            return redirect("student_leave_requests")
+
+    leave_requests = LeaveRequest.objects.filter(
+        student=student
+    ).order_by("-id")
+
+    return render(
+        request,
+        "student_leave_requests.html",
+        {
+            "student": student,
+            "leave_requests": leave_requests,
+            "error": error,
         }
     )
